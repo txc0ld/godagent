@@ -1,0 +1,19 @@
+# Render Blueprint for God Agent
+# ==============================
+# Deploy with: https://render.com/deploy
+
+services:
+  - type: web
+    name: godagent
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: ANTHROPIC_API_KEY
+        sync: false  # User must set this in Render dashboard
+    healthCheckPath: /api/health
+    autoDeploy: true
+    plan: starter  # Can be upgraded to standard/pro for better performance
+

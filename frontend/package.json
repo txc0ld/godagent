@@ -1,13 +1,15 @@
 {
   "name": "god-agent-ui",
   "private": true,
-  "version": "1.0.0",
+  "version": "2.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "server": "tsx server/index.ts"
+    "server": "tsx server/index.ts",
+    "start": "NODE_ENV=production tsx server/index.ts",
+    "start:prod": "NODE_ENV=production node --loader tsx server/index.ts"
   },
   "dependencies": {
     "react": "^18.2.0",

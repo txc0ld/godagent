@@ -9,6 +9,7 @@ import express, { Request, Response, NextFunction } from 'express';
 import { spawn, exec } from 'child_process';
 import { promisify } from 'util';
 import * as path from 'path';
+import * as fs from 'fs';
 import {
   securityHeaders,
   createRateLimiter,
@@ -24,9 +25,11 @@ const execAsync = promisify(exec);
 
 const app = express();
 const PORT = process.env.PORT || 4200;
+const IS_PRODUCTION = process.env.NODE_ENV === 'production';
 
 // Project root (parent of frontend)
 const PROJECT_ROOT = path.resolve(import.meta.dirname, '../..');
+const FRONTEND_DIST = path.resolve(import.meta.dirname, '../dist');
 
 // ==================== Security Middleware ====================
 
@@ -49,17 +52,15 @@ const apiRateLimiter = createRateLimiter({
 
 // CORS - restrict in production
 app.use((req, res, next) => {
-  const allowedOrigins = process.env.NODE_ENV === 'production'
-    ? ['http://localhost:5173', 'http://localhost:5174']
-    : '*';
+  // In production, we serve from same origin so CORS is less critical
+  // But allow specific origins for flexibility
+  const allowedOrigins = IS_PRODUCTION
+    ? [process.env.ALLOWED_ORIGIN || ''].filter(Boolean)
+    : ['http://localhost:5173', 'http://localhost:5174', 'http://localhost:4200'];
   
-  if (typeof allowedOrigins === 'string') {
-    res.header('Access-Control-Allow-Origin', allowedOrigins);
-  } else if (Array.isArray(allowedOrigins)) {
-    const origin = req.headers.origin;
-    if (origin && allowedOrigins.includes(origin)) {
-      res.header('Access-Control-Allow-Origin', origin);
-    }
+  const origin = req.headers.origin;
+  if (!IS_PRODUCTION || !origin || allowedOrigins.length === 0 || allowedOrigins.includes(origin)) {
+    res.header('Access-Control-Allow-Origin', origin || '*');
   }
   
   res.header('Access-Control-Allow-Headers', 'Content-Type');
@@ -733,6 +734,31 @@ function generateRoutingFactors(result: any): Array<{
   ];
 }
 
+// ==================== Static File Serving (Production) ====================
+
+if (IS_PRODUCTION) {
+  // Check if frontend dist exists
+  if (fs.existsSync(FRONTEND_DIST)) {
+    // Serve static files from the built frontend
+    app.use(express.static(FRONTEND_DIST, {
+      maxAge: '1d', // Cache static assets for 1 day
+      etag: true,
+    }));
+
+    // Serve index.html for all non-API routes (SPA fallback)
+    app.get('*', (req, res) => {
+      // Don't serve index.html for API routes
+      if (req.path.startsWith('/api')) {
+        return res.status(404).json({ error: 'Not found' });
+      }
+      res.sendFile(path.join(FRONTEND_DIST, 'index.html'));
+    });
+  } else {
+    console.warn('[Server] Warning: Frontend dist not found at', FRONTEND_DIST);
+    console.warn('[Server] Run "npm run build" in the frontend directory');
+  }
+}
+
 // ==================== Error Handler ====================
 
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
@@ -742,18 +768,35 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   });
 });
 
+// ==================== Health Check ====================
+
+app.get('/api/health', (req, res) => {
+  res.json({
+    status: 'healthy',
+    timestamp: new Date().toISOString(),
+    version: '2.0.0',
+    environment: IS_PRODUCTION ? 'production' : 'development',
+    configured: setupConfig.configured,
+  });
+});
+
 // ==================== Start Server ====================
 
 app.listen(PORT, () => {
+  const mode = IS_PRODUCTION ? 'PRODUCTION' : 'DEVELOPMENT';
+  const staticServing = IS_PRODUCTION && fs.existsSync(FRONTEND_DIST) ? 'Yes' : 'No';
+  
   console.log(`
 ╔══════════════════════════════════════════════════════════════╗
-║               God Agent API Server                            ║
+║               God Agent API Server v2.0.0                     ║
 ╠══════════════════════════════════════════════════════════════╣
-║  Server running at: http://localhost:${PORT}                    ║
-║  Project root: ${PROJECT_ROOT.substring(0, 40)}...
-║  Configured: ${setupConfig.configured ? 'Yes' : 'No - Setup required'}
+║  Mode: ${mode.padEnd(52)}║
+║  Server running at: http://localhost:${String(PORT).padEnd(23)}║
+║  Static files: ${staticServing.padEnd(44)}║
+║  Configured: ${(setupConfig.configured ? 'Yes' : 'No - Setup required').padEnd(46)}║
 ║                                                               ║
 ║  Endpoints:                                                   ║
+║    GET  /api/health           - Health check                 ║
 ║    GET  /api/status           - System status                ║
 ║    POST /api/ask              - Ask anything                 ║
 ║    POST /api/code             - Generate code                ║
