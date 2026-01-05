@@ -1,0 +1,662 @@
+/* Dark Theme Variables */
+:root {
+    --bg-primary: #1a1a2e;
+    --bg-secondary: #16213e;
+    --bg-tertiary: #0f3460;
+    --text-primary: #eeeeee;
+    --text-secondary: #a0a0a0;
+    --accent-success: #4CAF50;
+    --accent-error: #f44336;
+    --accent-warning: #ff9800;
+    --accent-info: #2196F3;
+    --border-color: #2a2a3e;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.6;
+}
+
+/* Header */
+header {
+    background-color: var(--bg-secondary);
+    padding: 1rem 2rem;
+    border-bottom: 2px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header h1 {
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.connection-status {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.status-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: var(--accent-warning);
+    animation: pulse 2s infinite;
+}
+
+.status-dot.connected {
+    background-color: var(--accent-success);
+    animation: none;
+}
+
+.status-dot.disconnected {
+    background-color: var(--accent-error);
+    animation: none;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+/* Dashboard Grid */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 1rem;
+    padding: 1rem;
+    max-width: 1800px;
+    margin: 0 auto;
+}
+
+/* Panels */
+.panel {
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.panel-header {
+    background-color: var(--bg-tertiary);
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.panel-header h2 {
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+.panel-body {
+    padding: 1rem;
+    flex: 1;
+    overflow-y: auto;
+}
+
+/* Activity Panel */
+.activity-panel {
+    grid-column: 1;
+    grid-row: 1 / 3;
+}
+
+.filters {
+    display: flex;
+    gap: 1rem;
+}
+
+.filter-select {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.85rem;
+}
+
+.activity-list {
+    list-style: none;
+    max-height: 600px;
+    overflow-y: auto;
+}
+
+.activity-item {
+    padding: 0.75rem;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.activity-item:last-child {
+    border-bottom: none;
+}
+
+.activity-info {
+    flex: 1;
+}
+
+.activity-message {
+    font-size: 0.9rem;
+    margin-bottom: 0.25rem;
+}
+
+.activity-meta {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+}
+
+/* Status Badges */
+.status-badge {
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.status-badge.success {
+    background-color: var(--accent-success);
+    color: white;
+}
+
+.status-badge.error {
+    background-color: var(--accent-error);
+    color: white;
+}
+
+.status-badge.running {
+    background-color: var(--accent-warning);
+    color: white;
+}
+
+.status-badge.info {
+    background-color: var(--accent-info);
+    color: white;
+}
+
+/* Count Badge */
+.count-badge {
+    background-color: var(--accent-info);
+    color: white;
+    padding: 0.25rem 0.5rem;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+/* Agents Panel */
+.agents-panel {
+    grid-column: 2;
+    grid-row: 1;
+}
+
+.agent-list {
+    list-style: none;
+}
+
+.agent-item {
+    padding: 0.75rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.agent-item:last-child {
+    border-bottom: none;
+}
+
+.agent-name {
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+}
+
+.agent-type {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+/* Pipelines Panel */
+.pipelines-panel {
+    grid-column: 2;
+    grid-row: 2;
+}
+
+.pipeline-list {
+    list-style: none;
+}
+
+.pipeline-item {
+    padding: 0.75rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.pipeline-item:last-child {
+    border-bottom: none;
+}
+
+.pipeline-name {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.progress-bar {
+    background-color: var(--bg-primary);
+    height: 8px;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    background-color: var(--accent-success);
+    height: 100%;
+    transition: width 0.3s ease;
+}
+
+.pipeline-stats {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    margin-top: 0.25rem;
+}
+
+/* Routing Panel */
+.routing-panel {
+    grid-column: 1;
+    grid-row: 3;
+}
+
+.routing-list {
+    list-style: none;
+}
+
+.routing-item {
+    padding: 0.75rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.routing-item:last-child {
+    border-bottom: none;
+}
+
+.routing-decision {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.routing-reasoning {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.25rem;
+}
+
+.routing-confidence {
+    font-size: 0.75rem;
+    color: var(--accent-info);
+}
+
+/* Learning Panel */
+.learning-panel {
+    grid-column: 2;
+    grid-row: 3;
+}
+
+.metrics-summary {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.metric-item {
+    background-color: var(--bg-primary);
+    padding: 0.75rem;
+    border-radius: 6px;
+    text-align: center;
+}
+
+.metric-label {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.25rem;
+}
+
+.metric-value {
+    display: block;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--accent-success);
+}
+
+.chart-container {
+    background-color: var(--bg-primary);
+    padding: 1rem;
+    border-radius: 6px;
+    height: 200px;
+}
+
+/* Memory Panel */
+.memory-panel {
+    grid-column: 1 / 3;
+    grid-row: 4;
+}
+
+.tabs {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.tab-button {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background-color 0.2s;
+}
+
+.tab-button:hover {
+    background-color: var(--bg-tertiary);
+}
+
+.tab-button.active {
+    background-color: var(--accent-info);
+    border-color: var(--accent-info);
+    color: white;
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+.memory-search {
+    margin-bottom: 1rem;
+}
+
+.search-input {
+    width: 100%;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+    padding: 0.5rem;
+    border-radius: 4px;
+    font-size: 0.9rem;
+}
+
+.memory-list {
+    list-style: none;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.memory-item {
+    padding: 0.75rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.memory-item:last-child {
+    border-bottom: none;
+}
+
+.memory-domain {
+    font-weight: 600;
+    color: var(--accent-info);
+    margin-bottom: 0.25rem;
+}
+
+.memory-content {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.25rem;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+.memory-tags {
+    font-size: 0.75rem;
+}
+
+.tag {
+    background-color: var(--bg-tertiary);
+    padding: 0.15rem 0.4rem;
+    border-radius: 3px;
+    margin-right: 0.25rem;
+}
+
+.memory-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.stat-card {
+    background-color: var(--bg-primary);
+    padding: 0.75rem;
+    border-radius: 6px;
+    text-align: center;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+        padding: 0.5rem;
+    }
+
+    .panel {
+        grid-column: 1 !important;
+        grid-row: auto !important;
+    }
+
+    .activity-panel,
+    .memory-panel {
+        grid-column: 1;
+    }
+
+    header {
+        padding: 0.75rem 1rem;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    header h1 {
+        font-size: 1.2rem;
+    }
+
+    .filters {
+        flex-direction: column;
+        gap: 0.5rem;
+        width: 100%;
+    }
+
+    .filter-select {
+        width: 100%;
+    }
+
+    .metrics-summary {
+        grid-template-columns: 1fr;
+    }
+
+    .tabs {
+        flex-direction: column;
+    }
+
+    .tab-button {
+        width: 100%;
+    }
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--bg-tertiary);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--border-color);
+}
+
+/* ============================
+   New Panels - UCM, IDESC, etc.
+   ============================ */
+
+/* Metrics Grid */
+.metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 1rem;
+    padding: 0.5rem;
+}
+
+.metric-card {
+    background: var(--bg-tertiary);
+    border-radius: 8px;
+    padding: 1rem;
+    text-align: center;
+    border: 1px solid var(--border-color);
+}
+
+.metric-card .metric-label {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.5rem;
+}
+
+.metric-card .metric-value {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+/* Status colors */
+.status-healthy {
+    color: var(--accent-success) !important;
+}
+
+.status-degraded {
+    color: var(--accent-warning) !important;
+}
+
+.status-unhealthy {
+    color: var(--accent-error) !important;
+}
+
+/* UCM Panel */
+.ucm-panel {
+    border-left: 3px solid #9C27B0;
+}
+
+/* Registry Panel */
+.registry-panel {
+    border-left: 3px solid #00BCD4;
+}
+
+/* Hyperedge Panel */
+.hyperedge-panel {
+    border-left: 3px solid #FF5722;
+}
+
+/* Token Panel */
+.token-panel {
+    border-left: 3px solid #FFEB3B;
+}
+
+/* Daemon Panel */
+.daemon-panel {
+    border-left: 3px solid #8BC34A;
+}
+
+/* Extended tab styling */
+.tabs {
+    display: flex;
+    gap: 0.25rem;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 0.5rem;
+}
+
+.tab-button {
+    padding: 0.5rem 1rem;
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    border-radius: 4px 4px 0 0;
+    transition: all 0.2s ease;
+    font-size: 0.85rem;
+}
+
+.tab-button:hover {
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+}
+
+.tab-button.active {
+    background: var(--bg-tertiary);
+    color: var(--accent-info);
+    border-bottom: 2px solid var(--accent-info);
+    margin-bottom: -2px;
+}
+
+/* Stat cards in memory inspector */
+.stat-card {
+    background: var(--bg-tertiary);
+    border-radius: 6px;
+    padding: 0.75rem;
+    text-align: center;
+}
+
+.stat-card .metric-label {
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+}
+
+.stat-card .metric-value {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+/* Memory stats grid */
+.memory-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+}

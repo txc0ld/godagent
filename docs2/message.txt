@@ -1,0 +1,69 @@
+## OBJECTIVE
+OK Implement everything.
+YOU MUST FOLLOW /home/unixdude/projects/project1/docs2/claudeflow.md. AND USE SUBAGENTS VIA CLAUDE FLOW
+Any agent can pick up tasks following the dependency order in  /home/unixdude/projects/project1/docs/god-agent-specs/intelligent-desc/TASKS-IDESC-001.md
+Make sure to follow /home/unixdude/projects/project1/docs2/claudeflow.md AND USE SUBAGENTS VIA CLAUDE FLOW
+FOLLOW ALL INSTRUCTIONS BELOW. Must ADHERE TO /home/unixdude/projects/project1/docs/god-agent-specs/intelligent-desc/CONSTITUTION-IDESC-001.md
+
+## REQUIRED READING (MANDATORY BEFORE ANY ACTION)
+  |---------------------------|------|---------------------------------------------------------------------------------|
+  | PRD-IDESC-001.md          | 24KB | 18 REQ-IDs, 12 NFR-IDs, 6 user stories, 12 edge cases, 7 guardrails             |
+  | SPEC-IDESC-001.md         | 51KB | 8 functional specs, 5 interfaces, 3 data flows, 2 state machines, 45 test cases |
+  | TECH-IDESC-001.md         | 45KB | 4 components, 3 DB tables, 3 API endpoints, performance budgets                 |
+  | TASKS-IDESC-001.md        | 81KB | 46 tasks across 11 sprints (~19 dev days)                                       |
+  | CONSTITUTION-IDESC-001.md | 21KB | 64 rules, 10 articles, 5 security requirements                                  |
+
+After reading all docs, select optimal reasoning mode(s). Ultra think.
+
+## DELIVERABLES
+1. Use Claudeflow to track task completions in /home/unixdude/projects/project1/docs/god-agent-specs/phd-token-limits/_ai` - tracks task + PRD changes (only if PRD changes) and completion state
+2. Update  the following In PRD folder when tasks are completed (/home/unixdude/projects/project1/docs/god-agent-specs/phd-token-limits/_ai):
+  - activeContext.md - Current focus, priorities, decisions
+  - implementation-state.json - Task status tracking
+  - progress.md - Progress log
+3. Implement all tasks per `/home/unixdude/projects/project1/docs/god-agent-specs/intelligent-desc/TASKS-IDESC-001.md `
+4. Review implementations to confirm adherence to requirements and constitution. 
+
+## AGENT COORDINATION (per /home/unixdude/projects/project1/docs2/claudeflow.md)
+- Select correct agent types + models for each task
+- Run subagents **SYNCHRONOUSLY** - respect dependency order
+- **Verify all subagent work personally** - never trust without validation
+- Each subagent MUST report: what memories created + where stored
+- Brief next subagent on exactly which memories to access
+- Shared memories enable N agents to operate as one unit
+
+## SUBAGENT MODEL SELECTION
+| Task Type | Model | Flag |
+|-----------|-------|------|
+| Complex Reasoning/Debugging | Opus 4.5 | `--model claude-opus-4-5-20251101` |
+| Code Review | Opus 4.5 | `--model claude-opus-4-5-20251101` |
+| Code Implementation | Sonnet 4.5 | `--model claude-sonnet-4-5-20250929` |
+| Testing/Linting | Sonnet 4.5 | `--model claude-sonnet-4-5-20250929` |
+| Index Updates | Haiku 4.5 | `--model claude-haiku-4-5-20251001` |
+| File Operations | Haiku 4.5 | `--model claude-haiku-4-5-20251001` |
+
+## ENGINEERING STANDARDS (NON-NEGOTIABLE)
+- **No backwards compatibility** - break cleanly or work correctly
+- **No workarounds/fallbacks** - fail fast, fix root cause
+- **No mock test data** - real data only, verify actual behavior
+- **No false-passing tests** - tests must reflect true system state
+- Run linters on all code
+
+## ERROR HANDLING
+All failures must immediately halt and log: what failed + full diagnostic context + enough info to fix.
+
+## PRE-PUSH GATE (`/pushrepo`)
+Before any push, verify **ALL** requirements in '/home/unixdude/projects/project1/docs/god-agent-specs/intelligent-desc/CONSTITUTION-IDESC-001.md'.
+If ANY requirement unmet → **STOP** → Alert me with:
+- Which requirement failed
+- Current state vs expected state
+- Suggested fix
+
+## CODEBASE ALIGNMENT
+1. Audit task against current codebase structure
+2. **Review git history** for recent changes
+3. Verify all file paths/names exist as referenced
+4. Update any stale references in task docs'
+## OUTPUT REQUIREMENTS
+All docs must enable a zero-context AI agent to implement perfectly with no ambiguity.
+Prompt subagents to: understand problem → select optimal reasoning → execute.

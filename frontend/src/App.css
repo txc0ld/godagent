@@ -1,0 +1,143 @@
+/**
+ * God Agent App - Main Layout
+ * Professional Dark Theme
+ */
+
+/* ==================== App Container ==================== */
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  background: var(--bg-primary);
+}
+
+/* ==================== Background Effects ==================== */
+.app-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* Warm ambient glow - right side */
+.app-bg::before {
+  content: '';
+  position: absolute;
+  top: 5%;
+  right: -20%;
+  width: 60vw;
+  height: 80vh;
+  background: radial-gradient(ellipse, var(--glow-warm) 0%, transparent 50%);
+  filter: blur(80px);
+  opacity: 0.8;
+}
+
+/* Cool ambient glow - left side */
+.app-bg::after {
+  content: '';
+  position: absolute;
+  bottom: 10%;
+  left: -15%;
+  width: 45vw;
+  height: 60vh;
+  background: radial-gradient(ellipse, var(--glow-cool) 0%, transparent 50%);
+  filter: blur(60px);
+  opacity: 0.6;
+}
+
+/* Subtle grid overlay */
+.app-grid {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.2;
+  background-image: 
+    linear-gradient(var(--border-subtle) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border-subtle) 1px, transparent 1px);
+  background-size: 80px 80px;
+}
+
+/* Large background text */
+.app-bg-text {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: clamp(10rem, 25vw, 28rem);
+  font-weight: 800;
+  letter-spacing: -0.05em;
+  line-height: 0.85;
+  background: linear-gradient(180deg, rgba(20,20,20,0.4) 0%, rgba(0,0,0,0) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+}
+
+/* ==================== Main Container ==================== */
+.main-container {
+  display: flex;
+  flex: 1;
+  position: relative;
+  z-index: 1;
+  margin-top: 64px; /* Header height */
+  overflow: hidden;
+}
+
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
+}
+
+/* ==================== Loading State ==================== */
+.app-loading {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-5);
+  background: var(--bg-primary);
+}
+
+.app-loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 2px solid var(--border-strong);
+  border-top-color: var(--text-primary);
+  border-radius: var(--radius-full);
+  animation: spin 0.7s linear infinite;
+}
+
+.app-loading p {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+}
+
+/* ==================== Responsive ==================== */
+@media (max-width: 1200px) {
+  .main-container {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 768px) {
+  .app-bg-text {
+    font-size: 10rem;
+  }
+  
+  .app-grid {
+    background-size: 40px 40px;
+  }
+}
